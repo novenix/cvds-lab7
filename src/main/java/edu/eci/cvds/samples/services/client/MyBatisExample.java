@@ -25,6 +25,11 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import java.util.Date;
+import edu.eci.cvds.sampleprj.dao.mybatis.mappers.ClienteMapper;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 /**
  *
@@ -57,16 +62,24 @@ public class MyBatisExample {
      * @param args
      * @throws SQLException 
      */
-    public static void main(String args[]) throws SQLException {
+    public static void main(String args[]) throws ParseException, SQLException {
         SqlSessionFactory sessionfact = getSqlSessionFactory();
 
         SqlSession sqlss = sessionfact.openSession();
 
         
         //Crear el mapper y usarlo: 
-        //ClienteMapper cm=sqlss.getMapper(ClienteMapper.class)
+        ClienteMapper cm=sqlss.getMapper(ClienteMapper.class);
         //cm...
-        
+        //consultar clientes
+        System.out.println("consultar clientes");
+        System.out.println(cm.consultarClientes());
+        //agregar item rentado a cliente
+        System.out.println("agregando item rentado a cliente");
+        cm.agregarItemRentadoACliente(321817,4,(Date) new SimpleDateFormat("yyyy/MM/dd").parse("2020/09/24"),(Date) new SimpleDateFormat("yyyy/MM/dd").parse("2020/09/25"));
+        //consultar un  cliente
+        System.out.println("consultar un solo cliente ");
+        System.out.println(cm.consultarCliente(321817));
         
         
         sqlss.commit();

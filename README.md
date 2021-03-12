@@ -1,4 +1,6 @@
 ### Escuela Colombiana de Ingeniería
+mvn exec:java -Dexec.mainClass="edu.eci.cvds.samples.services.client.MyBatisExample"
+
 ### Ciclos de Vida del desarrollo de Software – CVDS
 #### Tecnologías de persistencia - Frameworks de Persistencia - Introducción a MyBatis
 
