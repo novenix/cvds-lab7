@@ -25,11 +25,15 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import java.util.Date;
-import edu.eci.cvds.sampleprj.dao.mybatis.mappers.ClienteMapper;
+import java.sql.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import edu.eci.cvds.samples.entities.TipoItem;
+import edu.eci.cvds.samples.entities.Item;
+import edu.eci.cvds.sampleprj.dao.mybatis.mappers.ClienteMapper;
+import edu.eci.cvds.sampleprj.dao.mybatis.mappers.ItemMapper;
+
 
 /**
  *
@@ -76,11 +80,26 @@ public class MyBatisExample {
         System.out.println(cm.consultarClientes());
         //agregar item rentado a cliente
         System.out.println("agregando item rentado a cliente");
-        cm.agregarItemRentadoACliente(321817,4,(Date) new SimpleDateFormat("yyyy/MM/dd").parse("2020/09/24"),(Date) new SimpleDateFormat("yyyy/MM/dd").parse("2020/09/25"));
+        cm.agregarItemRentadoACliente(321817,4,Date.valueOf("2021-03-14"),Date.valueOf("2021-03-28"));
         //consultar un  cliente
         System.out.println("consultar un solo cliente ");
         System.out.println(cm.consultarCliente(321817));
+
+        System.out.println("items");
+        ItemMapper itm = sqlss.getMapper(ItemMapper.class);
+        System.out.println("Consultar items");
+        System.out.println(itm.consultarItems());
+        System.out.println("Buscando el item de id 1022367709,");
+        System.out.println(itm.consultarItem(1022367709));
+        System.out.println("añadir item id 0987");
+        /**
+        Item(TipoItem tipo, int id, String nombre, String descripcion, Date fechaLanzamiento, long tarifaxDia, String formatoRenta, String genero)
+         */
+         //al momenot de susstentar hay que cambiar el numero 9877778 porque va a aparecer como llave duplicada
+        itm.insertarItem( new Item( new TipoItem(2,"Accion"),9877778,"Como dijo Vladimir, wa mirmir","descripcion",Date.valueOf("2021-03-14"),2313,"renta","accion" ));
         
+        System.out.println("Consultando item");
+        System.out.println(itm.consultarItem(9877778));
         
         sqlss.commit();
         
